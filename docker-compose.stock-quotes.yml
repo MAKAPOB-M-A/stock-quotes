@@ -26,6 +26,9 @@ services:
     restart: always
     environment:
       - DATABASE_URL=postgresql://postgres:prisma@postgres:5432/stock-quotes?schema=stock-quotes
+      - NEXT_PUBLIC_DYNAMIC_DASHBOARD_REFRESH_DURATION=3
+      - NEXT_PUBLIC_DYNAMIC_DASHBOARD_LENGTH=10
+      - NEXT_PUBLIC_SMA_PERIOD_MINUTES=9
     ports:
       - "3000:3000"
     networks:
