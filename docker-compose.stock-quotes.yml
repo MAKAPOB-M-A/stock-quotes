@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=prisma
+    ports:
+      - "5432:5432"
+    networks:
+      - prisma-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    command: postgres -c listen_addresses='*'
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+  stock-quotes:
+    depends_on:
+      - postgres
+    image: cr.yandex/crp33m5l31lqhs7ps1fn/stock-quotes
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://postgres:prisma@postgres:5432/stock-quotes?schema=stock-quotes
+    ports:
+      - "3000:3000"
+    networks:
+      - prisma-network
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  prisma-network:
+
+volumes:
+  postgres_data:
