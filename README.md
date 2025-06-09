@@ -5,7 +5,8 @@
 - [Установка](#установка)
 - [Структура проекта](#структура-проекта)
 - [Быстрый старт](#быстрый-старт)
-- [Запуск в среде Docker](#Запуск в среде Docker)
+- [Запуск в среде Docker](#запуск-в-среде-Docker)
+- [Описание переменных окружения](#описание-переменных-окружения)
 
 ## Установка
 Предварительные требования:
@@ -30,8 +31,25 @@
 - README.md - Текущий файл
 
 ## Быстрый старт
-npm run dev
+Запуск миграций базы данных 
+`npm run db:deploy`
+
+Запуск приложения
+`npm run dev`
+
 
 ## Запуск в среде Docker
 `docker compose -f docker-compose.stock-quotes.yml up -d`
 
+## Описание переменных окружения
+
+| Переменная          | Описание                                                                                                           | Пример                                                                     | Этап внедрения |
+|------------|--------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|----------------|
+| DATABASE_URL | URL до базы данных postgres                                                                                        | postgresql://user:password@localhost:5432/stock-quotes?schema=stock-quotes | Запуск проекта |
+| DATA_SOURCE | Указание источника данных                                                                                          | "STUB" или "EXCHANGE"                                                      | Запуск проекта |
+| NEXT_PUBLIC_DYNAMIC_DASHBOARD_LENGTH | Указание длинны динамического графика                                                                              | 100                                                                        | сборка проекта       |
+| NEXT_PUBLIC_DYNAMIC_DASHBOARD_REFRESH_DURATION | Указание частоты обновления динамического графика в милисекундах                                                   | 1000                                                                       | сборка проекта |
+| NEXT_PUBLIC_DASHBOARD_CURRENCY | Указание валюты, отображаемых на графиках                                                                          | rub                                                                        | сборка проекта |
+| NEXT_PUBLIC_SMA_PERIOD_MINUTES | Период расчета скользящего среднего (SMA) в минутах                                                                | 5                                                                          | сборка проекта |
+| EXCHANGE_URL | URL для источника данных [exchange.org](https://openexchangerates.org) в случае если DATA_SOURCE=EXCHANGE            | https://openexchangerates.org/api                                                                        | Запуск проекта |
+| EXCHANGE_ACCESS_KEY | Ключ доступа для источника данных [exchange.org](https://openexchangerates.org) в случае если DATA_SOURCE=EXCHANGE | 56bb0d460a2e404c91bcf6806e3c5611                                                                        | Запуск проекта |
